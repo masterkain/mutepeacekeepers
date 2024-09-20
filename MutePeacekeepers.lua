@@ -1,19 +1,19 @@
 -- Create the addon frame within a local scope to prevent global namespace pollution
 local frame = CreateFrame("Frame")
 
--- Define the target subzone where sounds should be muted
-local TARGET_SUBZONE = "Contender's Gate"
+-- Define the target zone ID where sounds should be muted
+local TARGET_ZONE_ID = 14771
 
 -- Define the sound file ranges to mute (keeping original ranges)
 local SoundRanges = {
-	-- clashing sounds
+	-- Clashing sounds
 	{ Start = 1393680, End = 1393733 },
 	{ Start = 1393680, End = 1394257 },
 	{ Start = 567619, End = 567916 },
-	-- weapon swing sounds
+	-- Weapon swing sounds
 	{ Start = 1302923, End = 1302932 },
 	{ Start = 1302596, End = 1302605 },
-	-- grunts
+	-- Grunts
 	{ Start = 5919829, End = 5919837 },
 	{ Start = 5919761, End = 5919779 },
 	{ Start = 5919528, End = 5919549 },
@@ -52,11 +52,12 @@ local function UnmuteSounds()
 	isMuted = false
 end
 
--- Function to check the current subzone and mute/unmute sounds accordingly
+-- Function to check the current zone and mute/unmute sounds accordingly
 local function CheckZone()
-	local currentSubZone = GetSubZoneText()
+	-- Get the current map ID for the player's location
+	local currentMapID = C_Map.GetBestMapForUnit("player")
 
-	if currentSubZone == TARGET_SUBZONE then
+	if currentMapID == TARGET_ZONE_ID then
 		if not isMuted then
 			MuteSounds()
 		end
@@ -69,7 +70,12 @@ end
 
 -- Event handler to respond to zone changes
 local function OnEvent(self, event, ...)
-	CheckZone()
+	if event == "PLAYER_ENTERING_WORLD" then
+		-- Delay the initial check to ensure map information is loaded
+		C_Timer.After(1, CheckZone)
+	else
+		CheckZone()
+	end
 end
 
 -- Register relevant events
@@ -82,12 +88,3 @@ frame:SetScript("OnEvent", OnEvent)
 
 -- Initialize by checking the zone when the addon loads
 -- Ensures correct state on addon initialization
--- Sometimes PLAYER_ENTERING_WORLD might not have the correct subzone immediately, so we can use a small delay
-frame:SetScript("OnEvent", function(self, event, ...)
-	if event == "PLAYER_ENTERING_WORLD" then
-		-- Delay the initial check to ensure subzone information is loaded
-		C_Timer.After(1, CheckZone)
-	else
-		CheckZone()
-	end
-end)
