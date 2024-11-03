@@ -1,10 +1,10 @@
-## Interface: 110002, 110005
+## Interface: 110005, 110007
 
 ## Title: Mute Oathsworn Peacekeepers
 ## Notes: Mutes specific NPC sounds in Contender's Gate with optional debug mode.
 ## IconTexture: Interface/Icons/ability_siege_engineer_automatic_repair_beam.blp
 
-## Version: 1.0.5
+## Version: 1.0.6
 
 ## Author: Kain
 ## X-Email: masterkain at gmail dot com
