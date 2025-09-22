@@ -1,10 +1,10 @@
 ## Interface: 110200,110205
 
 ## Title: Mute Oathsworn Peacekeepers
-## Notes: Mutes specific NPC sounds in Contender's Gate with optional debug mode.
+## Notes: Silences Oathsworn Peacekeeper voice lines in Dornogal.
 ## IconTexture: Interface/Icons/ability_siege_engineer_automatic_repair_beam.blp
 
-## Version: 1.0.8
+## Version: 1.0.9
 
 ## Author: Kain
 ## X-Email: masterkain at gmail dot com
